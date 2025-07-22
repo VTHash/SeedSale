@@ -9,7 +9,7 @@ function BuyHFV() { const [ethAmount, setEthAmount] = useState("");
 const [loading, setLoading] = useState(false); 
 const [message, setMessage] = useState("");
 
-const buy = async () => { setLoading(true); 
+const buyTokens = async () => { setLoading(true); 
 try { const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner(); 
 const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
