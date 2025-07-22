@@ -1,5 +1,6 @@
 LiveStats.jsx
-const CONTRACT_ADDRESS = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
+import React, { useState, useEffect } from "react"
+const CONTRACT_ADDRESS = "0xbE39EbB5DaE5292658efF152Ec4EE37Ddc558812";
 function LiveStats() { const [sold, setSold] = useState(0); 
 const HFV_CAP = 2100000;
 useEffect(() => { async function fetchSold() 

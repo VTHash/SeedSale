@@ -1,10 +1,18 @@
 {
-  "name": "hfv-seed-sale-dapp",
-  "version": "1.0.0",
-  "scripts": {"dev": "vite", 
-  "build": "vite build", 
-  "preview": "vite preview"},
-  "dependencies": {"react": "^18.2.0", 
-  "react-dom": "^18.2.0", "ethers": "^6.6.0"},
-  "devDependencies": {"vite": "^5.0.0"}
+    "name": "hfv-seed-sale-dapp",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@vitejs/plugin-react": "^4.7.0",
+        "ethers": "^6.6.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "vite": "^7.0.5"
+    }
 }

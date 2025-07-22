@@ -1,8 +1,8 @@
 ClaimHFV.jsx
 import { useState } from "react"; 
 import { ethers } from "ethers"; 
-import abi from "../abi/SeedSaleWithVesting.json";
-const CONTRACT_ADDRESS = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
+import abi from "./abi/SeedSaleWithVesting.json";
+const CONTRACT_ADDRESS = "0xbE39EbB5DaE5292658efF152Ec4EE37Ddc558812";
 function ClaimHFV() { const [loading, setLoading] = useState(false); 
 const [message, setMessage] = useState("");
 const claim = async () => { setLoading(true); 
@@ -20,11 +20,10 @@ setLoading(false);
 
 };
 
-return ( <div className="bg-green-800 p-4 rounded shadow">
-     <h2 className="text-xl font-bold mb-2">Claim Vested HFV</h2>
-      <button onClick={claim} disabled={loading} 
-      className="bg-green-500 px-4 py-2 rounded"> {loading ? "Claiming..." : "Claim Tokens"}
-         </button> <p className="mt-2 text-sm">{message}</p> </div> ); }
+return ( <div className="space-y-4 mt-8"> <h2 className="text-2xl font-bold text-green-500">Vesting</h2> <div className="text-sm text-gray-300">Allocated: <span className="text-white font-semibold">{allocated} HFV</span></div> <div className="text-sm text-gray-300">Claimed: <span className="text-white font-semibold">{claimed} HFV</span></div> <div className="text-sm text-gray-300">Claimable Now: <span className="text-green-400 font-bold">{claimable} HFV</span></div> <button
+onClick={claimTokens}
+className="w-full py-3 px-6 bg-green-500 text-black font-semibold rounded-lg shadow-md hover:bg-green-400 transition duration-300"
+> Claim Tokens </button> </div> ); }
 
 export default ClaimHFV;
 

@@ -1,9 +1,9 @@
 BuyHFV.jsx
 import { useState } from "react"; 
 import { ethers } from "ethers"; 
-import abi from "../abi/SeedSaleWithVesting.json";
+import abi from "./abi/SeedSaleWithVesting.json";
 
-const CONTRACT_ADDRESS = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
+const CONTRACT_ADDRESS = "0xbE39EbB5DaE5292658efF152Ec4EE37Ddc558812";
 
 function BuyHFV() { const [ethAmount, setEthAmount] = useState(""); 
 const [loading, setLoading] = useState(false); 
@@ -26,13 +26,10 @@ setLoading(false);
 
 };
 
-return ( <div className="bg-green-900 p-4 rounded shadow">
- <h2 className="text-xl font-bold mb-2">Buy HFV with ETH</h2> 
- <input type="text" value={ethAmount} onChange={(e) => setEthAmount(e.target.value)} placeholder="Amount in ETH" className="w-full p-2 text-black mb-2" /> 
- <button onClick={buy} disabled={loading} className="bg-green-500 px-4 py-2 rounded"> 
- {loading ? "Processing..." : "Buy HFV"} 
- </button> <p className="mt-2 text-sm">{message}
-    </p> 
-    </div> ); }
+return (
+     <div className="space-y-4"> <h2 className="text-2xl font-bold text-green-500">Buy HFV</h2> <input type="number" step="0.01" value={ethAmount} onChange={(e) => setEthAmount(e.target.value)} placeholder="Enter ETH amount" className="w-full p-3 rounded-lg bg-black text-green-400 border border-green-500 placeholder-green-300 focus:outline-none focus:ring-2 focus:ring-green-500" /> <button
+onClick={buyTokens}
+className="w-full py-3 px-6 bg-green-500 text-black font-semibold rounded-lg shadow-md hover:bg-green-400 transition duration-300"
+> Buy HFV with ETH </button> </div> ); }
 
 export default BuyHFV;

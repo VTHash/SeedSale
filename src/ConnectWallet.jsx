@@ -14,9 +14,10 @@ const connect = async () => { if (window.ethereum)
 ({ method: "eth_requestAccounts" }); 
 setAccount(accounts[0]); onConnect?.(accounts[0]); } };
 
-return ( <div className="text-center"> 
-{account ? ( <p>Connected: {account.slice(0, 6)}...{account.slice(-4)}</p> ) : 
-( <button onClick={connect} className="bg-green-600 px-4 py-2 rounded hover:bg-green-500"> Connect Wallet </button> )} </div> ); }
+return ( <div className="flex justify-between items-center bg-black border border-green-500 rounded-xl px-4 py-3 text-sm text-green-400"> <div> {account ? ( <span className="font-mono">Connected: {account.slice(0, 6)}...{account.slice(-4)}</span> ) : ( <span>Not connected</span> )} </div> <button
+onClick={connect}
+className="ml-4 px-4 py-2 bg-green-500 text-black font-semibold rounded-lg shadow hover:bg-green-400 transition"
+> {account ? "Connected" : "Connect Wallet"} </button> </div> ); }
 
 export default ConnectWallet;
 
