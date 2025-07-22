@@ -1,7 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import "tailwindcss";
 body { 
     @apply bg-black text-green-400 font-sans;
 }

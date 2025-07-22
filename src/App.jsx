@@ -7,8 +7,6 @@ import ConnectWallet from "./ConnectWallet";
 function App() {
   return (
     <div className="min-h-screen bg-black text-green-400 font-sans p-6">
-      <div className="max-w-md mx-auto border border-green-500 rounded-2xl shadow-lg shadow-green-500/30 p-6 space-y-8">
-      </div>
         
         <img
   src="/logo.png"
