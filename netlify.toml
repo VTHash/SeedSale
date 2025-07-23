@@ -1,0 +1,4 @@
+[build]
+base = "SeedSale"
+publish = "SeedSale/dist"
+command = "npm run build"
