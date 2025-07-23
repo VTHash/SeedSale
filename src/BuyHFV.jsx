@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ethers } from "ethers"; 
 import abi from "./abi/SeedSaleWithVesting.json";
 
-const CONTRACT_ADDRESS = "0xbE39EbB5DaE5292658efF152Ec4EE37Ddc558812";
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
 
 function BuyHFV() { const [ethAmount, setEthAmount] = useState(""); 
 const [loading, setLoading] = useState(false); 
