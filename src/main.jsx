@@ -5,7 +5,7 @@ import "./index.css";
 
 import { WagmiConfig } from "wagmi";
 import { createAppKit } from "@reown/appkit/react";
-import { appkitConfig, projectId, wagmiAdapter } from "./reownConfig";
+import { appkitConfig, projectId, wagmiAdapter } from "../reownConfig";
 
 const appKit = createAppKit({ projectId, networks: [mainnet], wagmiConfig: wagmiAdapter });
 

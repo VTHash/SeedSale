@@ -7,12 +7,17 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@reown/appkit": "^1.7.16",
+        "@reown/appkit-adapter-wagmi": "^1.7.16",
+        "@tanstack/react-query": "^5.83.0",
         "@vitejs/plugin-react": "^4.7.0",
         "ethers": "^6.6.0",
         "postcss": "^8.5.6",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "tailwindcss": "^4.1.11"
+        "tailwindcss": "^4.1.11",
+        "viem": "^2.33.0",
+        "wagmi": "^2.16.0"
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.1.11",
