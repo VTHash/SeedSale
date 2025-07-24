@@ -5,7 +5,7 @@ import {
   useContractWrite,
   usePrepareContractWrite,
 } from 'wagmi';
-import seedSaleAbi from '../abis/SeedSaleWithVesting.json';
+import seedSaleAbi from './abi/SeedSaleWithVesting.json';
 
 const SEED_SALE_CONTRACT = import.meta.env.VITE_SEEDSALE_CONTRACT;
 

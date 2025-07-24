@@ -1,6 +1,6 @@
 import { useAccount, useContractRead } from 'wagmi';
 import { formatUnits } from 'viem';
-import seedSaleAbi from '../abis/SeedSaleWithVesting.json';
+import seedSaleAbi from './abi/SeedSaleWithVesting.json';
 
 const SEED_SALE_CONTRACT = import.meta.env.VITE_SEEDSALE_CONTRACT;
 const TOTAL_ALLOC = 2100000; // 2.1M HFV tokens
