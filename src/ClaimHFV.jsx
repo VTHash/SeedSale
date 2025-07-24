@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   useAccount,
   useContractWrite,
-  usePrepareContractWrite,
 } from 'wagmi';
 import seedSaleAbi from './abi/SeedSaleWithVesting.json';
 
