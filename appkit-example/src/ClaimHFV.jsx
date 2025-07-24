@@ -2,7 +2,7 @@ import { useAccount, useContractRead, useContractWrite } from 'wagmi';
 import { formatUnits } from 'viem';
 import seedSaleAbi from '../abi/SeedSaleWithVesting.json';
 
-const SEED_SALE_CONTRACT = import.meta.env.VITE_SEEDSALE_CONTRACT;
+const SEED_SALE_CONTRACT = process.meta.env.VITE_SEEDSALE_CONTRACT;
 
 export default function ClaimHFV() {
   const { address, isConnected } = useAccount();

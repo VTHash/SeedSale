@@ -3,7 +3,7 @@ import { parseEther } from 'viem';
 import { useState } from 'react';
 import seedSaleAbi from '../abi/SeedSaleWithVesting.json';
 
-const SEED_SALE_CONTRACT = import.meta.env.VITE_SEEDSALE_CONTRACT;
+const SEED_SALE_CONTRACT = process.meta.env.VITE_SEEDSALE_CONTRACT;
 
 export default function BuyHFV() {
   const { address, isConnected } = useAccount();
