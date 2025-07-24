@@ -1,16 +1,60 @@
-LiveStats.jsx
-import React, { useState, useEffect } from "react"
-const CONTRACT_ADDRESS = "0xbE39EbB5DaE5292658efF152Ec4EE37Ddc558812";
-function LiveStats() { const [sold, setSold] = useState(0); 
-const HFV_CAP = 2100000;
-useEffect(() => { async function fetchSold() 
-{ const provider = new ethers.providers.Web3Provider(window.ethereum);
-const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider); 
-const total = await contract.totalSold(); 
-setSold(parseFloat(ethers.utils.formatUnits(total, 18)));}
-if (window.ethereum) fetchSold(); }, []);
+import { useAccount, useContractRead } from 'wagmi';
+import { formatUnits } from 'viem';
+import seedSaleAbi from '../abis/SeedSaleWithVesting.json';
 
-return ( <div className="text-center text-lg"> <p>Sold: {sold.toLocaleString()} / {HFV_CAP.toLocaleString()} HFV</p> </div> ); }
+const SEED_SALE_CONTRACT = import.meta.env.VITE_SEEDSALE_CONTRACT;
+const TOTAL_ALLOC = 2100000; // 2.1M HFV tokens
 
-export default LiveStats;
+export default function LiveStats() {
+  const { address, isConnected } = useAccount();
 
+  const { data: sold } = useContractRead({
+    address: SEED_SALE_CONTRACT,
+    abi: seedSaleAbi,
+    functionName: 'totalTokensSold',
+    watch: true,
+  });
+
+  const { data: allocated } = useContractRead({
+    address: SEED_SALE_CONTRACT,
+    abi: seedSaleAbi,
+    functionName: 'getUserAllocation',
+    args: [address],
+    enabled: isConnected,
+    watch: true,
+  });
+
+  const { data: claimed } = useContractRead({
+    address: SEED_SALE_CONTRACT,
+    abi: seedSaleAbi,
+    functionName: 'getUserClaimed',
+    args: [address],
+    enabled: isConnected,
+    watch: true,
+  });
+
+  const { data: claimable } = useContractRead({
+    address: SEED_SALE_CONTRACT,
+    abi: seedSaleAbi,
+    functionName: 'getUserClaimable',
+    args: [address],
+    enabled: isConnected,
+    watch: true,
+  });
+
+  return (
+    <div className="mt-8 space-y-4 border-t border-green-800 pt-4 text-green-400">
+      <p className="text-xl font-semibold">
+        Sold: {sold ? `${formatUnits(sold, 18)} / ${TOTAL_ALLOC.toLocaleString()} HFV` : '...'}
+      </p>
+
+      {isConnected && (
+        <>
+          <p className="text-sm">Allocated: {allocated ? formatUnits(allocated, 18) : '0'} HFV</p>
+          <p className="text-sm">Claimed: {claimed ? formatUnits(claimed, 18) : '0'} HFV</p>
+          <p className="text-sm">Claimable: {claimable ? formatUnits(claimable, 18) : '0'} HFV</p>
+        </>
+      )}
+    </div>
+  );
+}
