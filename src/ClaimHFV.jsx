@@ -1,57 +1,70 @@
-import { useState } from 'react';
-import {
-  useAccount,
-  useContractWrite,
-} from 'wagmi';
-import seedSaleAbi from './abi/SeedSaleWithVesting.json';
+import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
+import abi from "./abi/SeedSaleWithVesting.json";
 
-const SEED_SALE_CONTRACT = import.meta.env.VITE_SEEDSALE_CONTRACT;
+const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
 
-export default function ClaimHFV() {
-  const { isConnected } = useAccount();
-  const [message, setMessage] = useState('');
-  const [isLoading, setLoading] = useState(false);
+export default function ClaimHFV({ provider, walletAddress }) {
+  const [claimable, setClaimable] = useState("0");
+  const [allocated, setAllocated] = useState("0");
+  const [claimed, setClaimed] = useState("0");
+  const [status, setStatus] = useState("");
 
-  const { config } = usePrepareContractWrite({
-    address: SEED_SALE_CONTRACT,
-    abi: seedSaleAbi,
-    functionName: 'claim',
-    enabled: isConnected,
-  });
+  const getData = async () => {
+    try {
+      if (!provider || !walletAddress) return;
 
-  const { write } = useContractWrite({
-    ...config,
-    onSuccess: () => {
-      setMessage('✅ Claimed successfully');
-      setLoading(false);
-    },
-    onError: (err) => {
-      console.error(err);
-      setMessage('❌ Claim failed');
-      setLoading(false);
-    },
-  });
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, abi, signer);
 
-  const handleClaim = async () => {
-    setLoading(true);
-    if (write) write();
-    else {
-      setMessage('⚠️ Cannot claim right now');
-      setLoading(false);
+      const vesting = await contract.vesting(walletAddress);
+      const claimableTokens = await contract.getClaimableTokens(walletAddress);
+
+      setAllocated(ethers.formatUnits(vesting.totalAllocation, 18));
+      setClaimed(ethers.formatUnits(vesting.totalClaimed, 18));
+      setClaimable(ethers.formatUnits(claimableTokens, 18));
+    } catch (err) {
+      console.error("Error fetching vesting data:", err);
     }
   };
 
+  const claimTokens = async () => {
+    try {
+      if (!provider || !walletAddress) return alert("Connect wallet first");
+
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+
+      const tx = await contract.claim();
+      await tx.wait();
+
+      alert("HFV claimed successfully!");
+      getData();
+    } catch (err) {
+      console.error("Claim failed:", err);
+      alert("Claim failed. See console for details.");
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [provider, walletAddress]);
+
   return (
-    <div className="space-y-4 mt-6">
-      <h2 className="text-2xl font-bold text-green-500">Claim HFV</h2>
+    <div className="claim-container">
+      <h2 className="section-title">Claim HFV</h2>
+      <p><strong>Wallet:</strong> {walletAddress || "Not connected"}</p>
+      <p><strong>Allocated:</strong> {allocated} HFV</p>
+      <p><strong>Claimed:</strong> {claimed} HFV</p>
+      <p><strong>Claimable:</strong> {claimable} HFV</p>
       <button
-        onClick={handleClaim}
-        disabled={isLoading}
-        className="w-full py-3 px-6 bg-green-500 text-black font-semibold rounded-lg shadow-md hover:bg-green-400 transition duration-300"
+        className="glow-button"
+        onClick={claimTokens}
+        disabled={!claimable || claimable === "0"}
       >
-        {isLoading ? 'Claiming...' : 'Claim My HFV'}
+        Claim Tokens
       </button>
-      {message && <p className="text-sm mt-2">{message}</p>}
+      {status && <p className="status-text">{status}</p>}
     </div>
   );
 }

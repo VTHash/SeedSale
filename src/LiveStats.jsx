@@ -1,58 +1,53 @@
-import { useAccount, useContractRead } from 'wagmi';
-import { formatUnits } from 'viem';
-import seedSaleAbi from './abi/SeedSaleWithVesting.json';
+import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
+import abi from "./abi/SeedSaleWithVesting.json";
 
-const SEED_SALE_CONTRACT = import.meta.env.VITE_SEEDSALE_CONTRACT;
-const TOTAL_ALLOC = 2100000; // 2.1M HFV tokens
+const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+const TOTAL_ALLOC = 2_100_000; // 2.1M HFV total tokens for seed sale
 
-export default function LiveStats() {
-  const { address, isConnected } = useAccount();
+export default function LiveStats({ provider, walletAddress }) {
+  const [sold, setSold] = useState("0");
+  const [allocated, setAllocated] = useState("0");
+  const [claimed, setClaimed] = useState("0");
+  const [claimable, setClaimable] = useState("0");
 
-  const { data: sold } = useContractRead({
-    address: SEED_SALE_CONTRACT,
-    abi: seedSaleAbi,
-    functionName: 'totalTokensSold',
-    watch: true,
-  });
+  const getStats = async () => {
+    try {
+      if (!provider) return;
 
-  const { data: allocated } = useContractRead({
-    address: SEED_SALE_CONTRACT,
-    abi: seedSaleAbi,
-    functionName: 'getUserAllocation',
-    args: [address],
-    enabled: isConnected,
-    watch: true,
-  });
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, abi, signer);
 
-  const { data: claimed } = useContractRead({
-    address: SEED_SALE_CONTRACT,
-    abi: seedSaleAbi,
-    functionName: 'getUserClaimed',
-    args: [address],
-    enabled: isConnected,
-    watch: true,
-  });
+      const totalSold = await contract.totalTokensSold();
+      setSold(ethers.formatUnits(totalSold, 18));
 
-  const { data: claimable } = useContractRead({
-    address: SEED_SALE_CONTRACT,
-    abi: seedSaleAbi,
-    functionName: 'getUserClaimable',
-    args: [address],
-    enabled: isConnected,
-    watch: true,
-  });
+      if (walletAddress) {
+        const vesting = await contract.vesting(walletAddress);
+        const claimableTokens = await contract.getClaimableTokens(walletAddress);
+
+        setAllocated(ethers.formatUnits(vesting.totalAllocation, 18));
+        setClaimed(ethers.formatUnits(vesting.totalClaimed, 18));
+        setClaimable(ethers.formatUnits(claimableTokens, 18));
+      }
+    } catch (err) {
+      console.error("Error loading stats:", err);
+    }
+  };
+
+  useEffect(() => {
+    getStats();
+  }, [provider, walletAddress]);
 
   return (
-    <div className="mt-8 space-y-4 border-t border-green-800 pt-4 text-green-400">
-      <p className="text-xl font-semibold">
-        Sold: {sold ? `${formatUnits(sold, 18)} / ${TOTAL_ALLOC.toLocaleString()} HFV` : '...'}
-      </p>
+    <div className="stats-container">
+      <h2 className="section-title">Live Stats</h2>
+      <p><strong>Sold:</strong> {sold} / {TOTAL_ALLOC.toLocaleString()} HFV</p>
 
-      {isConnected && (
+      {walletAddress && (
         <>
-          <p className="text-sm">Allocated: {allocated ? formatUnits(allocated, 18) : '0'} HFV</p>
-          <p className="text-sm">Claimed: {claimed ? formatUnits(claimed, 18) : '0'} HFV</p>
-          <p className="text-sm">Claimable: {claimable ? formatUnits(claimable, 18) : '0'} HFV</p>
+          <p><strong>Allocated:</strong> {allocated} HFV</p>
+          <p><strong>Claimed:</strong> {claimed} HFV</p>
+          <p><strong>Claimable:</strong> {claimable} HFV</p>
         </>
       )}
     </div>

@@ -1,38 +1,74 @@
-App.jsx
+import React, { useState } from "react";
 import BuyHFV from "./BuyHFV";
 import ClaimHFV from "./ClaimHFV";
 import LiveStats from "./LiveStats";
 import ConnectWallet from "./ConnectWallet";
+import "./index.css";
 
-function App() {
+import EthereumProvider from "@walletconnect/ethereum-provider";
+import { BrowserProvider } from "ethers";
+
+// Import env variables (must start with VITE_)
+const WALLETCONNECT_PROJECT_ID = import.meta.env.VITE_PROJECT_ID;
+const INFURA_ID = import.meta.env.VITE_INFURA_PROJECT_ID;
+
+export default function App() {
+  const [provider, setProvider] = useState(null);
+  const [walletAddress, setWalletAddress] = useState("");
+
+  // 🔗 Connect with MetaMask
+  const connectMetaMask = async () => {
+    if (window.ethereum) {
+      const browserProvider = new BrowserProvider(window.ethereum);
+      const signer = await browserProvider.getSigner();
+      const address = await signer.getAddress();
+      setProvider(browserProvider);
+      setWalletAddress(address);
+    } else {
+      alert("MetaMask not found");
+    }
+  };
+
+  // 🔗 Connect with WalletConnect v2
+  const connectWalletConnect = async () => {
+    const wcProvider = await EthereumProvider.init({
+      projectId: WALLETCONNECT_PROJECT_ID,
+      chains: [1], // Ethereum mainnet
+      showQrModal: true,
+      rpcMap: {
+        1: `https://mainnet.infura.io/v3/${INFURA_ID}`,
+      },
+    });
+
+    await wcProvider.enable();
+
+    const browserProvider = new BrowserProvider(wcProvider);
+    const signer = await browserProvider.getSigner();
+    const address = await signer.getAddress();
+
+    setProvider(browserProvider);
+    setWalletAddress(address);
+  };
+
   return (
-    <div className="min-h-screen bg-black text-green-400 font-sans p-6 animate-glow">
-        
-        <img
-  src="/hfv-logo.png"
-  alt="HFV Logo"
-  className="mx-auto w-20 h-20 mb-4 animate-pulse drop-shadow-[0_0_20px_#00ff99] transition duration-300"
-/>
-       <div className="max-w-md mx-auto border border-green-500 rounded-2xl shadow-lg shadow-green-500/30 p-6 space-y-8">
-  <img
-    src="/hfv-logo.png"
-    alt="HFV Logo"
-    className="mx-auto w-20 h-20 mb-4 animate-pulse drop-shadow-[0_0_12px_#00ff99]"
-  /> 
-       <h1 className="text-3xl font-bold text-green-500">HFV Seed Sale</h1>
-        <p className="text-sm text-green-300">Buy. Track. Claim. Own the future of <span className="italic text-white">decentralized value</span>.</p>
+    <div className="app-wrapper">
+      <div className="glow-frame">
+        <header className="app-header">
+          <img src="/hfv-logo.png" alt="HFV Logo" className="logo" />
+          <h1 className="app-title">HFV Seed Sale Dashboard</h1>
+          <ConnectWallet
+            connectMetaMask={connectMetaMask}
+            connectWalletConnect={connectWalletConnect}
+            walletAddress={walletAddress}
+          />
+        </header>
 
-        <ConnectWallet />
-        <LiveStats />
-        <BuyHFV />
-        <ClaimHFV />
-
-        <p className="text-center text-xs text-green-300 mt-4">
-          Powered by <span className="font-bold text-green-400">HFV Protocol ✨</span>
-        </p>
+        <main className="main-content">
+          <LiveStats provider={provider} walletAddress={walletAddress} />
+          <BuyHFV provider={provider} walletAddress={walletAddress} />
+          <ClaimHFV provider={provider} walletAddress={walletAddress} />
+        </main>
       </div>
     </div>
   );
 }
-
-export default App;

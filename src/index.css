@@ -1,4 +1,225 @@
-@import "tailwindcss";
-body { 
-    @apply bg-black text-green-400 font-sans;
+body {
+  background-color: #000;
+  color: #00ff99;
+  font-family: 'Arial', sans-serif;
+}
+
+.glow {
+  box-shadow: 0 0 10px #00ff99, 0 0 20px #00ffcc;
+}
+
+.app-wrapper {
+  min-height: 100vh;
+  background-color: #000;
+  color: #00ff99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.glow-frame {
+  border: 1px solid #00ff99;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 30px rgba(0, 255, 153, 0.5);
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+}
+
+.logo {
+  width: 80px;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 10px #00ff99);
+}
+
+.app-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.main-content > * {
+  margin-bottom: 1.5rem;
+}
+
+.buy-container {
+  background-color: #0a0a0a;
+  border: 1px solid #00ff99;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 153, 0.4);
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #00ff99;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #00ff99;
+  background-color: #000;
+  color: #00ff99;
+  margin-bottom: 1rem;
+}
+
+.buy-button {
+  background-color: transparent;
+  border: 1px solid #00ff99;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #00ff99;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buy-button:hover {
+  background-color: #00ff99;
+  color: #000;
+  box-shadow: 0 0 12px #00ff99;
+}
+
+.success-text {
+  color: #00ff99;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.claim-container {
+  background-color: #0a0a0a;
+  border: 1px solid #00ff99;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 2rem;
+  box-shadow: 0 0 20px rgba(0, 255, 153, 0.4);
+}
+
+.stat-line {
+  color: #00ff99;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.claim-button {
+  background-color: transparent;
+  border: 1px solid #00ff99;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #00ff99;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.claim-button:hover {
+  background-color: #00ff99;
+  color: #000;
+  box-shadow: 0 0 12px #00ff99;
+}
+
+.success-text {
+  color: #00ff99;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.connect-wallet-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.connect-wallet-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #00ff99;
+  background-color: black;
+  border: 2px solid #00ff99;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.connect-wallet-button:hover {
+  background-color: #00ff99;
+  color: black;
+}
+
+.live-stats-container {
+  background: #000;
+  border: 2px solid #00ff99;
+  padding: 2rem;
+  border-radius: 16px;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 20px #00ff99;
+}
+
+.live-stats-title {
+  text-align: center;
+  color: #00ff99;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.stats-bar {
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  height: 24px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-shadow: inset 0 0 5px #00ff99;
+}
+
+.stats-bar-sold {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff99, #007755);
+  transition: width 0.5s ease-in-out;
+}
+
+.stats-info {
+  color: #ffffff;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.wallet-connection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.glow-button {
+  background-color: #00ff95;
+  border: none;
+  color: black;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #00ff95;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glow-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ff95;
+}
+
+.wallet-address {
+  color: #00ff95;
+  font-size: 0.9rem;
+  font-family: monospace;
 }
