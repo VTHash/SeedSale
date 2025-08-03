@@ -6,7 +6,7 @@ import ConnectWallet from "./ConnectWallet";
 import "./index.css";
 import EthereumProvider from "@walletconnect/ethereum-provider";
 import { BrowserProvider } from "ethers";
-import walletConnectLogo from "./wallet-connect-logo.png";
+import walletConnectLogo from "../wallet-connect-logo.png";
 // Import env variables (must start with VITE_)
 const WALLETCONNECT_PROJECT_ID = import.meta.env.VITE_PROJECT_ID;
 const INFURA_ID = import.meta.env.VITE_INFURA_PROJECT_ID;
@@ -54,13 +54,13 @@ export default function App() {
       <div className="glow-frame">
         <header className="app-header">
           <img src="/hfv-logo.png" alt="HFV Logo" className="logo" />
-          <img src={walletConnectLogo} alt="WalletConnect" className="walletconnect-logo" />
           <h1 className="app-title">HFV Seed Sale Dashboard</h1>
           <ConnectWallet
             connectMetaMask={connectMetaMask}
             connectWalletConnect={connectWalletConnect}
             walletAddress={walletAddress}
-        </header>
+            />
+            </header>
 
         <main className="main-content">
           <LiveStats provider={provider} walletAddress={walletAddress} />
