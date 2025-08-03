@@ -1,5 +1,5 @@
 import React from "react";
-
+import walletConnectLogo from "../wallet-connect-logo.png";
 export default function ConnectWallet({ connectMetaMask, connectWalletConnect, walletAddress }) {
   return (
     <div className="wallet-connection">
@@ -8,7 +8,7 @@ export default function ConnectWallet({ connectMetaMask, connectWalletConnect, w
       </button>
 
       <button className="glow-button" onClick={connectWalletConnect}>
-        <img src="/wallet-connect-logo.png" alt="WalletConnect" className="walletconnect-logo" />
+        <img src={walletConnectLogo} alt="WalletConnect" className="walletconnect-logo" />
       </button>
 
       {walletAddress ? (
