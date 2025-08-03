@@ -4,7 +4,6 @@ import ClaimHFV from "./ClaimHFV";
 import LiveStats from "./LiveStats";
 import ConnectWallet from "./ConnectWallet";
 import "./index.css";
-import walletConnectLogo from '/wallet-connect-logo.png';
 import EthereumProvider from "@walletconnect/ethereum-provider";
 import { BrowserProvider } from "ethers";
 
@@ -55,7 +54,6 @@ export default function App() {
       <div className="glow-frame">
         <header className="app-header">
           <img src="/hfv-logo.png" alt="HFV Logo" className="logo" />
-          <img src={walletConnectLogo} alt="WalletConnect" className="walletconnect-logo" />
           <h1 className="app-title">HFV Seed Sale Dashboard</h1>
           <ConnectWallet
             connectMetaMask={connectMetaMask}
