@@ -4,7 +4,7 @@ import ClaimHFV from "./ClaimHFV";
 import LiveStats from "./LiveStats";
 import ConnectWallet from "./ConnectWallet";
 import "./index.css";
-import walletConnectLogo from './wallet-connect-logo.png';
+import walletConnectLogo from '/wallet-connect-logo.png';
 import EthereumProvider from "@walletconnect/ethereum-provider";
 import { BrowserProvider } from "ethers";
 
