@@ -68,7 +68,20 @@ export default function App() {
           <BuyHFV provider={provider} walletAddress={walletAddress} />
           <ClaimHFV provider={provider} walletAddress={walletAddress} />
         </main>
+        <div style={{ textAlign: "center", marginTop: "2rem" }}>
+  <a
+    href="https://etherscan.io/address/0xeAb3B66a24bD99171E0a854b6dA215CE3A7FFa98"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      src="https://etherscan.io/images/brandassets/etherscan-logo-light-circle.png"
+      alt="Powered by Etherscan"
+      style={{ height: "32px", opacity: 0.8 }}
+    />
+  </a>
       </div>
     </div>
+</div>
   );
-}
+  }
