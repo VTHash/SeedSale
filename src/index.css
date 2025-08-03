@@ -256,3 +256,22 @@ body {
   margin-left: 6px;
   vertical-align: middle;
 }
+
+.walletconnect-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.walletconnect-logo {
+  height: 40px;
+  width: 40px;
+  filter: drop-shadow(0 0 6px #00ffae);
+  transition: transform 0.3s ease;
+}
+
+.walletconnect-logo:hover {
+  transform: scale(1.1);
+}

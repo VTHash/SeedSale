@@ -8,7 +8,7 @@ export default function ConnectWallet({ connectMetaMask, connectWalletConnect, w
       </button>
 
       <button className="glow-button" onClick={connectWalletConnect}>
-        Connect WalletConnect
+        <img src="/wallet-connect-logo.png" alt="WalletConnect" className="walletconnect-logo" />
       </button>
 
       {walletAddress ? (
