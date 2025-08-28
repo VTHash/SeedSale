@@ -38,7 +38,10 @@ export default function App() {
         1: `https://mainnet.infura.io/v3/${INFURA_ID}`,
       },
     });
-
+    
+    if (wcProvider.session) { 
+      await wcProvider.disconnect();
+    }
     await wcProvider.enable();
 
     const browserProvider = new BrowserProvider(wcProvider);
@@ -47,6 +50,10 @@ export default function App() {
 
     setProvider(browserProvider);
     setWalletAddress(address);
+    wcProvider.on("disconnect", () => {
+      setProvider(null);
+      setWalletAddress(null);
+    });
   };
 
   return (
